@@ -68,18 +68,13 @@ function get_weather(city){
     .then((response)=>response.json())
     .then(api_callback)
 }
-function get_city(ip){
-    fetch(`https://ip.city/api.php?ip=${ip}&key=a3eee3a76ef4c7be6b9de7440f898ddc`)
+function get_city(){
+    fetch(`/data`)
     .then((response)=>response.json())
     .then((data)=>{
         var city=data.city;
         get_weather(city)
     })
-}
-function get_ip(){
-    fetch('https://api.ipify.org')
-    .then((response)=>response.text())
-    .then((ip)=> get_city(ip))
 }
 async function add_pref(){
     if(document.cookie==""){
@@ -98,7 +93,9 @@ async function disp_pref(){
     var cities = await fetch('/pref/get');
     cities=await cities.json();
     cities=cities.preferences
-    document.getElementById("preferences").innerHTML="";
+    document.getElementById("preferences").innerHTML=
+    `<div id='preference'><button onclick='get_city()'>current location
+    </button></div>`;
     for(var city of cities){
     var preference=`<div id='preference'><button onclick='get_weather("${city}")'>${city}
     </button><button onclick='del_pref("${city}")'>X</button></div>`
@@ -107,13 +104,17 @@ async function disp_pref(){
 }
 document.addEventListener('DOMContentLoaded',()=>{
     if(document.cookie==""){
-        document.getElementById('in-out').innerText='LOGIN';
-        document.getElementById('in-out').href="/login.html";
+        for(var item of document.getElementsByClassName('in-out')){
+            item.innerText='LOGIN';
+            item.href="/login.html"
+        }
     }
     else {
-        document.getElementById('in-out').innerText='LOGOUT';
-        document.getElementById('in-out').href="/logout";
+        for(var item of document.getElementsByClassName('in-out')){
+            item.innerText='LOGOUT';
+            item.href="/logout"
+        }
         disp_pref();
     }
-    //get_ip();
+    get_city();
 });

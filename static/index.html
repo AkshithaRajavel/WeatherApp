@@ -11,9 +11,9 @@
     <script src="index.js"></script>
 </head>
 <body>
-        <div class="position-sticky top-0 container nav_">
+        <div class="container nav_ d-none d-lg-grid">
         <div class="row">
-        <button class="col-1"><a href="/logout" id="in-out">LOGOUT</a></button>
+        <button class="col-1"><a href="/logout" class="in-out"></a></button>
         <h1 class="col-8">WEATHER APP</h1>
         <form class="col-3">
             <input name="city" type="text" placeholder="Enter a city name">
@@ -21,7 +21,22 @@
         </form>
     </div>
     </div>
-    <div id="preferences"></div>
+    <div class="container nav_ d-block d-lg-none">
+        <div class="row">
+        <button class="col-3"><a href="/logout" class="in-out"></a></button>
+        <div class="col-8">
+        <h1>WEATHER APP</h1></div>
+        <div class="row">
+        <form>
+            <input name="city" type="text" placeholder="Enter a city name">
+            <button type="button" onclick="get_weather(document.getElementsByTagName('input')['city'].value)">GO</button>
+        </form></div>
+    </div></div>
+    <div id="main">
+    <div id="preferences">
+        <button onclick='get_city()'>current location
+        </button>
+    </div>
     <button onclick="add_pref()">Add preferences</button>
     <input name='preference'>
     <h3 class="error"></h3>
@@ -29,6 +44,7 @@
     <div id="city_details">
     </div>
     <div id="forecast_5days">
+    </div>
     </div>
 </body>
 </html>

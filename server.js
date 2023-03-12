@@ -3,22 +3,26 @@ const mongoose = require('mongoose');
 const User = require('./models/userModel');
 const Preference = require('./models/preferences');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const { response } = require('express');
 mongoose.connect('mongodb+srv://akshitha:akshitha@cluster0.4iviwmv.mongodb.net/?retryWrites=true&w=majority')
 app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('static'));
-app.get('/data/:city',(req,res)=>{
-    this.res=res;
-    function respond(data){
-        this.res.send(data);
-    }
-    respond=respond.bind(this);
+app.use(cookieParser());
+app.set('trust proxy', true)
+app.get('/data',async (req,res)=>{
+    const ip = req.ip;
+    var city = await  fetch(`https://ip.city/api.php?ip=${ip}&key=a3eee3a76ef4c7be6b9de7440f898ddc`);
+    city  = await city.json();
+    res.json(city);
+})
+app.get('/data/:city',async (req,res)=>{
     var city = req.params.city;
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=18f3f8149007befb7c68afdce646f455`)
-    .then((response)=>response.json())
-    .then(respond);
+    var response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=18f3f8149007befb7c68afdce646f455`);
+    response=await response.json();
+    res.json(response);
 })
 app.post('/signup',async (req,res)=>{
     const {username,password,confirm_password}=req.body;
@@ -57,22 +61,28 @@ app.post('/login',async (req,res)=>{
         user: existing_user._id
     },'raven');
     response={status:1};
-    res.cookie('token',token).json(response);
+    res.cookie('token',token);
+    res.cookie('userId',existing_user._id);
+    res.json(response);
 })
 app.get('/logout',(req,res)=>{
     res.cookie('token','',{
         expires:new Date(0)
-    }).redirect('/');
+    });
+    res.cookie('userId','',{
+        expires:new Date(0)
+    });
+    res.redirect('/');
 })
 app.get('/pref/get',async (req,res)=>{
-    const userId = "640db962098f28f4bdf00cb9";
+    const userId = req.cookies.userId;
     var preferences = await Preference.findOne({userId:userId});
     preferences={preferences:preferences.preferences};
     return res.json(preferences);
 })
 app.get('/pref/del/:city',async(req,res)=>{
     const city=req.params.city;
-    const userId = "640db962098f28f4bdf00cb9";
+    const userId = req.cookies.userId;
     var preferences = await Preference.findOne({userId:userId});
     preferences.preferences = preferences.preferences.filter(
         (pref)=>{return pref!=city}
@@ -82,7 +92,7 @@ app.get('/pref/del/:city',async(req,res)=>{
 })
 app.get('/pref/add/:city',async(req,res)=>{
     const city=req.params.city;
-    const userId = "640db962098f28f4bdf00cb9";
+    const userId = req.cookies.userId;
     var preferences = await Preference.findOne({userId:userId});
     if(preferences.preferences.includes(city)==0){
         preferences.preferences.push(city);
