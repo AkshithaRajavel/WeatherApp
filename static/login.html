@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather app</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <script src="login.js"></script>
+</head>
+<body>
+    <div class="container nav_">
+    <div class="row">
+    <div class="col-10"><h1>WEATHER APP</h1></div>
+    <button class="col-1"><a href="signup.html">SIGNUP</a></button>
+    </div>
+    </div>
+    <div id="login">
+        <h1>LOGIN</h1>
+        <div class="container">
+        <div class="row">
+        <label class="col">USERNAME:</label>
+        <input class="col" type="text" name="username" required></div>
+        <div class="row">
+        <label class="col">PASSWORD:</label>
+        <input class="col" type="text" name="password" required></div>
+        <button type="submit" onclick="login()">SUBMIT</button>
+        </div>
+        <h3 class="error"></h3>
+    </div>
+</body>
+</html>

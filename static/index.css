@@ -1,0 +1,87 @@
+body{
+    color:white;
+    margin:2px;
+    padding: 2px;
+    font-family: 'Courier New', Courier, monospace;
+    background-image: url("images\\background.jpg");
+  height: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.hidden{
+    display: none;
+}
+div{
+    color: inherit;
+    margin-bottom: 10px;
+    padding:3px;
+}
+button{
+    width:fit-content;
+    text-align: center;
+    color:white;
+    background-color: black;
+    border-radius: 10px;
+}
+a{
+    color:white;
+    text-decoration: none;
+}
+#forecast_5days{
+    margin:10px;
+    padding: 10px;
+}
+div{
+    text-align: center;
+}
+#error{
+    color:red;
+}
+#forecast_5days div,#city_details div{ 
+    color: white;
+    display: inline-block;
+    text-align: left;
+    margin:3px;
+    padding: 5px;
+    border: 0.5px solid black;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+
+}
+#input{
+    color:white;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    margin:10px;
+    position: sticky;
+    top: 0;
+    left:0;
+}
+#login,#signup{
+    width:40%;
+    color:white;
+    margin:auto;
+    padding: 5px;
+    border: 0.5px solid black;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);   
+}
+#preference{
+    display: inline-block;
+    width: fit-content;
+    background-color: black;
+    margin-right:4px;
+    border-radius: 10px;
+}
+.nav_{
+    color:white;
+    background-color: rgba(0, 0, 0, 0.3);  
+}
+.error{
+    color: red;
+}
+
