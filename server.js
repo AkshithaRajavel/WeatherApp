@@ -4,7 +4,6 @@ const User = require('./models/userModel');
 const Preference = require('./models/preferences');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
-const { response } = require('express');
 
 function middleware(req,res,next){
     var token = req.cookies.token;
