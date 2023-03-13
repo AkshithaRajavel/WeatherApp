@@ -38,9 +38,11 @@ function api_callback(response){
     `
     var day_cnt=0,time_cnt=0;
     document.getElementById("forecast_5days").innerHTML="";
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     for(var date in data){
+        const day= days[new Date(date).getDay()];
         document.getElementById("forecast_5days").innerHTML+=`<div id='${date}'></div>`
-        document.getElementById(`${date}`).innerHTML+=`<h2>${date}</h2>`;
+        document.getElementById(`${date}`).innerHTML+=`<h2>${date}(${day})</h2>`;
         document.getElementById(`${date}`).innerHTML+='<div class="select_time"></div>'
         var time_cnt=0;
         for(var time in data[date]){
@@ -90,9 +92,9 @@ async function del_pref(city){
     disp_pref();
 }
 async function disp_pref(){
-    var cities = await fetch('/pref/get');
-    cities=await cities.json();
-    cities=cities.preferences
+    var res = await fetch('/pref/get');
+    const {status,cities}=await res.json();
+    if(!status){await fetch('/logout');window.location.href='/';return;}
     document.getElementById("preferences").innerHTML=
     `<div id='preference'><button onclick='get_city()'>current location
     </button></div>`;
@@ -116,5 +118,4 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
         disp_pref();
     }
-    get_city();
 });

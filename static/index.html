@@ -16,8 +16,8 @@
         <button class="col-1"><a href="/logout" class="in-out"></a></button>
         <h1 class="col-8">WEATHER APP</h1>
         <form class="col-3">
-            <input name="city" type="text" placeholder="Enter a city name">
-            <button type="button" onclick="get_weather(document.getElementsByTagName('input')['city'].value)">GO</button>
+            <input class="city_in" type="text" placeholder="Enter a city name">
+            <button type="button" onclick="get_weather(document.getElementsByClassName('city_in')[0].value)">GO</button>
         </form>
     </div>
     </div>
@@ -28,8 +28,8 @@
         <h1>WEATHER APP</h1></div>
         <div class="row">
         <form>
-            <input name="city" type="text" placeholder="Enter a city name">
-            <button type="button" onclick="get_weather(document.getElementsByTagName('input')['city'].value)">GO</button>
+            <input class="city_in" type="text" placeholder="Enter a city name">
+            <button type="button" onclick="get_weather(document.getElementsByClassName('city_in')[1].value)">GO</button>
         </form></div>
     </div></div>
     <div id="main">
@@ -44,6 +44,7 @@
     <div id="city_details">
     </div>
     <div id="forecast_5days">
+        <h1>Get 5 days Weather Forecast of any city across the globe</h1>
     </div>
     </div>
 </body>

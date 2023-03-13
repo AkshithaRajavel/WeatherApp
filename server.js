@@ -5,13 +5,26 @@ const Preference = require('./models/preferences');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const { response } = require('express');
+
+function middleware(req,res,next){
+    var token = req.cookies.token;
+    try{
+        var token_data = jwt.verify(token,'raven');
+        req.cookies.userId = token_data.user;
+        next();
+    }
+    catch(error){
+        res.json({status:0});
+    }
+}
 mongoose.connect('mongodb+srv://akshitha:akshitha@cluster0.4iviwmv.mongodb.net/?retryWrites=true&w=majority')
 app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('static'));
 app.use(cookieParser());
-app.set('trust proxy', true)
+app.use('/pref',middleware);
+app.set('trust proxy', true);
 app.get('/data',async (req,res)=>{
     const ip = req.ip;
     var city = await  fetch(`https://ip.city/api.php?ip=${ip}&key=a3eee3a76ef4c7be6b9de7440f898ddc`);
@@ -62,14 +75,10 @@ app.post('/login',async (req,res)=>{
     },'raven');
     response={status:1};
     res.cookie('token',token);
-    res.cookie('userId',existing_user._id);
     res.json(response);
 })
 app.get('/logout',(req,res)=>{
     res.cookie('token','',{
-        expires:new Date(0)
-    });
-    res.cookie('userId','',{
         expires:new Date(0)
     });
     res.redirect('/');
@@ -77,7 +86,7 @@ app.get('/logout',(req,res)=>{
 app.get('/pref/get',async (req,res)=>{
     const userId = req.cookies.userId;
     var preferences = await Preference.findOne({userId:userId});
-    preferences={preferences:preferences.preferences};
+    preferences={status:1,cities:preferences.preferences};
     return res.json(preferences);
 })
 app.get('/pref/del/:city',async(req,res)=>{
@@ -88,7 +97,7 @@ app.get('/pref/del/:city',async(req,res)=>{
         (pref)=>{return pref!=city}
     );
     await preferences.save();
-    res.send();
+    res.json({status:1});
 })
 app.get('/pref/add/:city',async(req,res)=>{
     const city=req.params.city;
@@ -98,7 +107,7 @@ app.get('/pref/add/:city',async(req,res)=>{
         preferences.preferences.push(city);
         await preferences.save();
     }
-    return res.send();
+    res.json({status:1});
 })
 //LISTEN
 port = 8000;
