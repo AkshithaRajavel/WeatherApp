@@ -6,7 +6,7 @@ function api_callback(response){
     }
     document.getElementById("status").innerHTML='5 Days Forecast';
     document.getElementById("city_details").innerHTML=`
-        <div><h1>City Name</h1><h2>${response.city.name}</h2></div>
+        <div><h1>Location</h1><h2>${response.city.name}</h2></div>
         <div><h1>Latitude</h2><h2>${response.city.coord.lat}</h2></div>
         <div><h1>Longitude</h1><h2>${response.city.coord.lon}</h2></div>`
     var data={};
@@ -66,17 +66,17 @@ function switch_time(date,time){
     }
 }
 function get_weather(city){
-    fetch(`/data/${city}`)
+    fetch(`/data/city/${city}`)
     .then((response)=>response.json())
     .then(api_callback)
 }
-function get_city(){
-    fetch(`/data`)
+async function get_city(){
+    await navigator.geolocation.getCurrentPosition((geo_details)=>{
+    const lat=geo_details.coords.latitude;
+    const lon=geo_details.coords.longitude;
+    fetch(`/data/lat-lon/${lat}/${lon}`)
     .then((response)=>response.json())
-    .then((data)=>{
-        var city=data.city;
-        get_weather(city)
-    })
+    .then(api_callback);});
 }
 async function add_pref(){
     if(document.cookie==""){

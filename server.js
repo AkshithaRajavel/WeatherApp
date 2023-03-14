@@ -24,13 +24,13 @@ app.use(express.static('static'));
 app.use(cookieParser());
 app.use('/pref',middleware);
 app.set('trust proxy', true);
-app.get('/data',async (req,res)=>{
-    const ip = req.ip;
-    var city = await  fetch(`https://ip.city/api.php?ip=${ip}&key=a3eee3a76ef4c7be6b9de7440f898ddc`);
-    city  = await city.json();
-    res.json(city);
+app.get('/data/lat-lon/:lat/:lon',async (req,res)=>{
+    const lat=req.params.lat,lon=req.params.lon;
+    var response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=18f3f8149007befb7c68afdce646f455`);
+    response=await response.json();
+    res.json(response);
 })
-app.get('/data/:city',async (req,res)=>{
+app.get('/data/city/:city',async (req,res)=>{
     var city = req.params.city;
     var response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=18f3f8149007befb7c68afdce646f455`);
     response=await response.json();
