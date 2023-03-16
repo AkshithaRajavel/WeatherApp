@@ -10,7 +10,6 @@ async function middleware(req,res,next){
     var token = req.cookies.token;
     try{
         var token_data = jwt.verify(token,'raven');
-        console.log(token_data);
         const existing_user=await User({email:token_data.email});
         if(!existing_user)return res.json({status:0});
     }
@@ -158,15 +157,12 @@ app.post('/setps',async(req,res)=>{
         const token_data=jwt.verify(token,'raven');
         const email = token_data.email;
         const password=req.body.password;
-        console.log(email,password);
         var existing_user = await User.findOne({email:email});
         existing_user.password=password;
         existing_user.save();
-        console.log(1);
         response={status:1,msg:"Password reset successful"};
     }
     catch(error){
-        console.log(error);
         response= {status:0,msg:"Password Reset Failed"};
     }
     res.json(response);
