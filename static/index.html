@@ -13,7 +13,7 @@
 <body>
         <div class="container nav_ d-none d-lg-grid">
         <div class="row">
-        <button class="col-1"><a href="/logout" class="in-out"></a></button>
+        <button class="col-1"><a href="/login.html" class="in-out">LOGIN</a></button>
         <h1 class="col-8">WEATHER APP</h1>
         <form class="col-3">
             <input class="city_in" type="text" placeholder="Enter a city name">
@@ -23,7 +23,7 @@
     </div>
     <div class="container nav_ d-block d-lg-none">
         <div class="row">
-        <button class="col-3"><a href="/logout" class="in-out"></a></button>
+        <button class="col-3"><a href="/login.html" class="in-out">LOGIN</a></button>
         <div class="col-8">
         <h1>WEATHER APP</h1></div>
         <div class="row">
@@ -32,6 +32,7 @@
             <button type="button" onclick="get_weather(document.getElementsByClassName('city_in')[1].value)">GO</button>
         </form></div>
     </div></div>
+    <p style="color:black;"id ="email"></p>
     <div id="main">
     <div id="preferences">
         <button onclick='get_city()'>current location

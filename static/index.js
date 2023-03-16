@@ -92,9 +92,16 @@ async function del_pref(city){
     disp_pref();
 }
 async function disp_pref(){
+    if(document.cookie=="") return;
     var res = await fetch('/pref/get');
-    const {status,cities}=await res.json();
+    const {status,email,cities}=await res.json();
     if(!status){await fetch('/logout');window.location.href='/';return;}
+    for(var item of document.getElementsByClassName('in-out')){
+        item.innerText='LOGOUT';
+        item.href="/logout"
+    }
+    document.getElementById("email").innerHTML=`
+    <p style="color:black;">User email:<b> ${email}</b></p>`;
     document.getElementById("preferences").innerHTML=
     `<div id='preference'><button onclick='get_city()'>current location
     </button></div>`;
@@ -105,17 +112,5 @@ async function disp_pref(){
     }
 }
 document.addEventListener('DOMContentLoaded',()=>{
-    if(document.cookie==""){
-        for(var item of document.getElementsByClassName('in-out')){
-            item.innerText='LOGIN';
-            item.href="/login.html"
-        }
-    }
-    else {
-        for(var item of document.getElementsByClassName('in-out')){
-            item.innerText='LOGOUT';
-            item.href="/logout"
-        }
-        disp_pref();
-    }
+    disp_pref();
 });

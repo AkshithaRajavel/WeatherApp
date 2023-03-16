@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const preferenceSchema = mongoose.Schema(
     {
-        userId:{type:String,required:true},
+        email:{type:String,required:true},
         preferences:{type:[String],required:true}
     }
 );

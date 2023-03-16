@@ -12,35 +12,29 @@
 </head>
 <body>
     <div class="container nav_ d-none d-lg-grid">
-    <div class="row">
-    <div class="col-10 "><h1>WEATHER APP</h1></div>
-    <button class="col-1"><a href="login.html">LOGIN</a></button>
-    </div>
-    </div>
-    <div class="container nav_ d-block d-lg-none">
         <div class="row">
-        <div class="col-8"><h1>WEATHER APP</h1></div>
-        <button class="col-3"><a href="login.html">LOGIN</a></button>
+        <div class="col-10 "><h1>WEATHER APP</h1></div>
+        <button class="col-1"><a href="login.html">LOGIN</a></button>
         </div>
         </div>
+        <div class="container nav_ d-block d-lg-none">
+            <div class="row">
+            <div class="col-8"><h1>WEATHER APP</h1></div>
+            <button class="col-3"><a href="login.html">LOGIN</a></button>
+        </div>
+    </div>
     <div id="login">
-        <h1>SIGNUP</h1>
+        <h1>Reset password</h1>
         <div class="container">
-        <div class="row">
-        <label class="col">EMAIL:</label>
-        <input class="col" type="text" name="email" required></div>
         <div class="row">
         <label class="col">PASSWORD:</label>
         <input class="col" type="text" name="password" required></div>
         <div class="row">
         <label class="col">CONFIRM PASSWORD:</label>
         <input class="col" type="text" name="con_password" required></div>
-        <button type="submit" onclick="signup()">Signup</button>
+        <button type="submit" onclick="resetps()">Reset password</button>
         </div>
         <h3 class="error"></h3>
     </div>
-    <div>
-    <h1>Get 5 days Weather Forecast of any city across the globe</h1></div>
-    <div><button><a href="/">Explore</a></button></div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 async function login(){
-    var username = document.getElementsByTagName('input')['username'].value;
+    var email = document.getElementsByTagName('input')['email'].value;
     var password = document.getElementsByTagName('input')['password'].value;
-    var req_body = {username:username,password:password};
+    var req_body = {email:email,password:password};
     req_body=JSON.stringify(req_body);
     var response = await fetch('/login',{  
         method: 'post',
@@ -14,15 +14,23 @@ async function login(){
     
 }
 async function signup(){
-    var username = document.getElementsByTagName('input')['username'].value;
+    var email = document.getElementsByTagName('input')['email'].value;
     var password = document.getElementsByTagName('input')['password'].value;
     var con_password = document.getElementsByTagName('input')['con_password'].value;
-    if(username==""|password==""){
-        document.getElementsByClassName('error')[0].innerHTML="invalid username or password";
+    if(email==""){
+        document.getElementsByClassName('error')[0].innerHTML="email is a required field";
+        return ;
+    }
+    if(password==""){
+        document.getElementsByClassName('error')[0].innerHTML="password is a required field";
+        return ;
+    }
+    if(con_password==""){
+        document.getElementsByClassName('error')[0].innerHTML="confirm password is a required field";
         return ;
     }
     if(password==con_password){
-    var req_body = {username:username,password:password};
+    var req_body = {email:email,password:password};
     req_body=JSON.stringify(req_body);
     var response = await fetch('/signup',{  
         method: 'post',
@@ -30,9 +38,47 @@ async function signup(){
         body: req_body
     })
     response = await response.json();
-    if (response.status) window.location.href="/login.html";
-    else document.getElementsByClassName('error')[0].innerHTML=response.msg;
+    document.getElementsByClassName('error')[0].innerHTML=response.msg;
     }
     else document.getElementsByClassName('error')[0].innerHTML='password inconsistent';
-    
+}
+async function forgotps(){
+    var email = document.getElementsByTagName('input')['email'].value;
+    if(email==""){
+        document.getElementsByClassName('error')[0].innerHTML="email is a required field";
+        return ;
+    }
+    var req_body = {email:email};
+    req_body=JSON.stringify(req_body);
+    var response = await fetch('/forgotps',{  
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: req_body
+    })
+    response = await response.json();
+    document.getElementsByClassName('error')[0].innerHTML=response.msg;
+}
+async function resetps(){
+    var password = document.getElementsByTagName('input')['password'].value;
+    var con_password = document.getElementsByTagName('input')['con_password'].value;
+    if(password==""){
+        document.getElementsByClassName('error')[0].innerHTML="password is a required field";
+        return ;
+    }
+    if(con_password==""){
+        document.getElementsByClassName('error')[0].innerHTML="confirm password is a required field";
+        return ;
+    }
+    if(password==con_password){
+    var req_body = {password:password};
+    req_body=JSON.stringify(req_body);
+    var response = await fetch('/setps',{  
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: req_body
+    })
+    response = await response.json();
+    document.getElementsByClassName('error')[0].innerHTML=response.msg;
+    }
+    else document.getElementsByClassName('error')[0].innerHTML='password inconsistent';
 }
