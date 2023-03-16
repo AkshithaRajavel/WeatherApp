@@ -135,7 +135,7 @@ app.post('/forgotps',async (req,res)=>{
         const token = jwt.sign({
             email:email
         },'raven');
-        const status=sendEmail(email,`https://f359-60-243-14-111.in.ngrok.io/resetps/${token}`,"reset password");
+        const status=sendEmail(email,`https://63a6-13-115-202-88.jp.ngrok.io/resetps/${token}`,"reset password");
         if(status)response={status:1,msg:"Reset link sent."}
         else response={status:0,msg:"Invalid Email"}
     }
