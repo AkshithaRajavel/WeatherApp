@@ -75,7 +75,7 @@ app.post('/signup',async (req,res)=>{
             email: email,
             password:password
         },'raven');
-        var status=sendEmail(email,`https://f359-60-243-14-111.in.ngrok.io/verify/${token}`,"verify email");
+        var status=sendEmail(email,`https://63a6-13-115-202-88.jp.ngrok.io/verify/${token}`,"verify email");
         if (status) response={status:1,msg:"Verification Link sent"}
         else response={status:0,msg:"Invalid Email"}
     }
