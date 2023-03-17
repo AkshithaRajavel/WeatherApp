@@ -5,7 +5,7 @@ const Preference = require('./models/preferences');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const nodemailer = require("nodemailer");
-const { response } = require('express');
+require("dotenv").config();
 async function middleware(req,res,next){
     var token = req.cookies.token;
     try{
@@ -21,17 +21,17 @@ async function middleware(req,res,next){
 }
 async function sendEmail(email,link,link_text){
     try{
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
+        const transporter = nodemailer.createTransport({
+            host: 'smtp-mail.outlook.com',
             port: 587,
-            secure: false, 
+            secureConnection: false,
             auth: {
-              user: "2407akshi@gmail.com", 
-              pass: "cltlofxoxvjslklb", 
-            },
-          });
-          let info = await transporter.sendMail({
-            from: '2407akshi@gmail.com', 
+                user: process.env.EMAILID,
+                pass: process.env.EMAILPASS
+            }
+        });
+        await transporter.sendMail({
+            from: `"WeatherApp support" <${process.env.EMAILID}>`, 
             to: email, 
             subject: "WeatherApp support", 
             html: `<a href=${link}>Click to ${link_text}</a>`,
@@ -39,6 +39,7 @@ async function sendEmail(email,link,link_text){
           var response= 1
     }
     catch(error){
+        console.log(error);
         var response = 0;
     }
     return response;
@@ -74,7 +75,7 @@ app.post('/signup',async (req,res)=>{
             email: email,
             password:password
         },'raven');
-        var status=sendEmail(email,`https://63a6-13-115-202-88.jp.ngrok.io/verify/${token}`,"verify email");
+        var status=sendEmail(email,`${process.env.PUBLIC_URL}/verify/${token}`,"verify email");
         if (status) response={status:1,msg:"Verification Link sent"}
         else response={status:0,msg:"Invalid Email"}
     }
@@ -135,7 +136,7 @@ app.post('/forgotps',async (req,res)=>{
         const token = jwt.sign({
             email:email
         },'raven');
-        const status=sendEmail(email,`https://63a6-13-115-202-88.jp.ngrok.io/resetps/${token}`,"reset password");
+        const status=sendEmail(email,`${process.env.PUBLIC_URL}/resetps/${token}`,"reset password");
         if(status)response={status:1,msg:"Reset link sent."}
         else response={status:0,msg:"Invalid Email"}
     }
@@ -195,4 +196,4 @@ app.get('/pref/add/:city',async(req,res)=>{
 })
 //LISTEN
 port = 8000;
-app.listen(port,()=>console.log(`server started on port ${port}`));
+app.listen(port,()=>console.log(`server started on port ${port}.URL:${process.env.PUBLIC_URL}`));
