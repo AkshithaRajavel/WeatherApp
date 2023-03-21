@@ -1,8 +1,1 @@
-user customizations
-web tokens
-charts.js - https://d3js.org/
-CORS
-
-preference storage
-Responsive
-deploy
+browser notifications
