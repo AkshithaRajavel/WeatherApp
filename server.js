@@ -44,7 +44,7 @@ async function sendEmail(email,link,link_text){
     }
     return response;
 }
-mongoose.connect('mongodb+srv://akshitha:akshitha@cluster0.4iviwmv.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO)
 app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
