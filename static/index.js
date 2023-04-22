@@ -79,13 +79,15 @@ async function get_city(){
     .then(api_callback);});
 }
 async function add_pref(){
-    if(document.cookie==""){
+    /* if(document.cookie==""){
     document.getElementsByClassName('error')[0].innerText="Login to add preferences";
-    return;}
+    return;} */
     var city=document.getElementsByTagName('input')['preference'].value;
     city = city.toLowerCase();
-    await fetch(`/pref/add/${city}`);
-    disp_pref();
+    const res = await fetch(`/pref/add/${city}`);
+    const {status}= await res.json();
+    if(!status)document.getElementsByClassName('error')[0].innerText="Login to add preferences";
+    else disp_pref();
 }
 async function del_pref(city){
     await fetch(`/pref/del/${city}`);
