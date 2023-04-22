@@ -6,7 +6,8 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-async function middleware(req,res,next){
+//middleware
+async function userauth(req,res,next){
     var token = req.cookies.token;
     try{
         var token_data = jwt.verify(token,'raven');
@@ -50,7 +51,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('static'));
 app.use(cookieParser());
-app.use('/pref',middleware);
+app.use('/pref',userauth);
 app.set('trust proxy', true);
 app.get('/data/lat-lon/:lat/:lon',async (req,res)=>{
     const lat=req.params.lat,lon=req.params.lon;

@@ -95,7 +95,7 @@ async function disp_pref(){
     if(document.cookie=="") return;
     var res = await fetch('/pref/get');
     const {status,email,cities}=await res.json();
-    if(!status){await fetch('/logout');window.location.href='/';return;}
+    if(!status)return;
     for(var item of document.getElementsByClassName('in-out')){
         item.innerText='LOGOUT';
         item.href="/logout"
