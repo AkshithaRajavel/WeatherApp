@@ -196,5 +196,5 @@ app.get('/pref/add/:city',async(req,res)=>{
     res.json({status:1});
 })
 //LISTEN
-port = 5000;
+port = process.argv[2];
 app.listen(port,()=>console.log(`server started on port ${port}.URL:${process.env.PUBLIC_URL}`));
